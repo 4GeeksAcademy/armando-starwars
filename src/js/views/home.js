@@ -3,6 +3,7 @@ import { Context } from "../store/appContext";
 import Personas from "../component/Personas.jsx";
 import Planetas from "../component/Planetas.jsx";
 import Vehiculos from "../component/Vehiculos.jsx";
+import "../../styles/home.css";
 
 const Home = () => {
 	const { store, actions } = useContext(Context);

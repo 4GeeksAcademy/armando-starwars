@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import vehicleData from "../../json/people.json";
+import vehicleData from "../../json/vehicles.json";
+import defaultImg from "../../img/default.jpg";
 
 const DetallesVehiculos = () => {
     const { vehicleId } = useParams();
     const [vehicle, setVehicle] = useState(null);
-    const adjustedId = parseInt(vehicleId) - 1;
+    const adjustedId = parseInt(vehicleId);
 
-    const vehicleImage = vehicleData.vehiculos.find(p => p.id === adjustedId)?.image || "https://via.placeholder.com/300";
+    const image = vehicleData.vehicles.find(p => p.id === adjustedId)?.image || defaultImg;
 
     useEffect(() => {
         const fetchVehicle = async () => {
@@ -38,7 +39,7 @@ const DetallesVehiculos = () => {
                 <div className="row g-0">
                     <div className="col-md-4">
                         <img
-                            src={vehicleImage}
+                            src={image}
                             className="img-fluid rounded-start"
                             alt={vehicle.name}
                             style={{ width: "100%", height: "100%", objectFit: "cover" }}

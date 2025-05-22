@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import peopleData from "../../json/people.json";
+import defaultImg from "../../img/default.jpg";
 
 const DetallesPersonas = () => {
     const { characterId } = useParams();
     const [character, setCharacter] = useState(null);
-    const adjustedId = parseInt(planetId) - 1;
+    const adjustedId = parseInt(characterId);
 
-    const peopleImage = peopleData.people.find(p => p.id === adjustedId)?.image || "https://via.placeholder.com/300";
+    const image = peopleData.people.find(p => p.id === adjustedId)?.image || defaultImg;
 
 
     useEffect(() => {
@@ -40,7 +41,7 @@ const DetallesPersonas = () => {
                 <div className="row g-0">
                     <div className="col-md-4">
                         <img
-                            src={peopleImage}
+                            src={image}
                             className="img-fluid rounded-start"
                             alt={character.name}
                             style={{ width: "100%", height: "100%", objectFit: "cover" }}

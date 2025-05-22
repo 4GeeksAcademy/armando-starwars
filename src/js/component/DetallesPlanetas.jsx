@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import planetData from "../../json/people.json";
+import planetData from "../../json/planets.json";
+import defaultImg from "../../img/default.jpg";
 
 const DetallesPlanetas = () => {
     const { planetId } = useParams(); 
     const [planet, setPlanet] = useState(null);
-    const adjustedId = parseInt(planetId) - 1;
+    const adjustedId = parseInt(planetId);
     
-    const planetImage = planetData.planets.find(p => p.id === adjustedId)?.image || "https://via.placeholder.com/300";
+    const image = planetData.planets.find(p => p.id === adjustedId)?.image || defaultImg;
 
     useEffect(() => {
         const fetchPlanet = async () => {
@@ -38,7 +39,7 @@ const DetallesPlanetas = () => {
                 <div className="row g-0">
                     <div className="col-md-4">
                         <img 
-                            src={planetImage}
+                            src={image}
                             className="img-fluid rounded-start" 
                             alt={planet.name}
                             style={{ width: "100%", height: "100%", objectFit: "cover" }}

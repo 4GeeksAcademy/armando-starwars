@@ -12,49 +12,94 @@ const getState = ({ getStore, getActions, setStore }) => {
                     const response = await fetch("https://swapi.tech/api/people");
                     const data = await response.json();
 
-                    const charactersWithId = data.results.map(item => ({
-                        name: item.name,
-                        uid: item.uid,
-                        id: parseInt(item.uid)
-                    }));
+                    const detailedCharacters = await Promise.all(
+                        data.results.map(async (item) => {
+                            const res = await fetch(`https://swapi.tech/api/people/${item.uid}`);
+                            const details = await res.json();
 
-                    setStore({ characters: charactersWithId });
+                            const localData = await import("../../json/people.json");
+                            const imageObj = localData.people.find(p => p.id === parseInt(item.uid));
+
+                            return {
+                                id: parseInt(item.uid),
+                                name: item.name,
+                                gender: details.result.properties.gender,
+                                hair_color: details.result.properties.hair_color,
+                                eye_color: details.result.properties.eye_color,
+                                image: imageObj?.image || "/img/default.jpg"
+                            };
+                        })
+                    );
+
+                    setStore({ characters: detailedCharacters });
+
                 } catch (error) {
                     console.log(error);
                 }
             },
+
             getPlanets: async () => {
                 try {
                     const response = await fetch("https://swapi.tech/api/planets");
                     const data = await response.json();
 
-                    const planetsWithId = data.results.map(item => ({
-                        name: item.name,
-                        uid: item.uid,
-                        id: parseInt(item.uid)
-                    }));
+                    const detailedPlanets = await Promise.all(
+                        data.results.map(async (item) => {
+                            const res = await fetch(`https://swapi.tech/api/planets/${item.uid}`);
+                            const details = await res.json();
 
-                    setStore({ planets: planetsWithId });
+                            const localData = await import("../../json/planets.json");
+                            const imageObj = localData.planets.find(p => p.id === parseInt(item.uid));
+
+                            return {
+                                id: parseInt(item.uid),
+                                name: details.result.properties.name,
+                                population: details.result.properties.population,
+                                terrain: details.result.properties.terrain,
+                                image: imageObj?.image || "/img/default.jpg"
+                            };
+                        })
+                    );
+
+                    setStore({ planets: detailedPlanets });
+
                 } catch (error) {
                     console.log(error);
                 }
             },
+
             getVehicles: async () => {
                 try {
                     const response = await fetch("https://swapi.tech/api/starships");
                     const data = await response.json();
 
-                    const vehiclesWithId = data.results.map(item => ({
-                        name: item.name,
-                        uid: item.uid,
-                        id: parseInt(item.uid)
-                    }));
+                    const detailedVehicles = await Promise.all(
+                        data.results.map(async (item) => {
+                            const res = await fetch(`https://swapi.tech/api/starships/${item.uid}`);
+                            const details = await res.json();
 
-                    setStore({ vehicles: vehiclesWithId });
+                            const localData = await import("../../json/vehicles.json");
+                            const imageObj = localData.vehicles.find(v => v.id === parseInt(item.uid));
+
+                            return {
+                                id: parseInt(item.uid),
+                                name: details.result.properties.name,
+                                model: details.result.properties.model,
+                                passengers: details.result.properties.passengers,
+                                cargo_capacity: details.result.properties.cargo_capacity,
+                                max_atmosphering_speed: details.result.properties.max_atmosphering_speed,
+                                image: imageObj?.image || "/img/default.jpg"
+                            };
+                        })
+                    );
+
+                    setStore({ vehicles: detailedVehicles });
+
                 } catch (error) {
                     console.log(error);
                 }
             },
+
             addFavorite: (item) => {
                 const store = getStore();
 
