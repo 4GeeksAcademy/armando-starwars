@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import Personas from "../component/Personas.jsx";
-import Planets from "../component/Planets.jsx";
-import Vehicles from "../component/Vehicles.jsx";
+import Planetas from "../component/Planetas.jsx";
+import Vehiculos from "../component/Vehiculos.jsx";
 
 const Home = () => {
 	const { store, actions } = useContext(Context);
@@ -20,10 +20,12 @@ const Home = () => {
 				{store.characters.map((character, index) => (
 					<div className="card mx-2" style={{ width: "18rem", display: "inline-block" }} key={index}>
 						<Personas
+							id={character.id}
 							name={character.name}
 							gender={character.gender}
 							hair_color={character.hair_color}
 							eye_color={character.eye_color}
+							image={character.image}
 						/>
 					</div>
 				))}
@@ -33,11 +35,12 @@ const Home = () => {
 			<div className="my-5" style={{ display: "inline-block" }}>
 				{store.planets.map((planet, index) => (
 					<div className="card mx-2" style={{ width: "18rem", display: "inline-block" }} key={index}>
-						<Planets
+						<Planetas
 							name={planet.name}
 							population={planet.population}
 							terrain={planet.terrain}
 							id={planet.id}
+							image={planet.image}
 						/>
 					</div>
 				))}
@@ -47,13 +50,14 @@ const Home = () => {
 			<div className="my-5" style={{ display: "inline-block" }}>
 				{store.vehicles.map((vehicle, index) => (
 					<div className="card mx-2" style={{ width: "18rem", display: "inline-block" }} key={index}>
-						<Vehicles
+						<Vehiculos
 							name={vehicle.name}
 							passengers={vehicle.passengers}
 							cargo_capacity={vehicle.cargo_capacity}
 							id={vehicle.id}
 							max_atmosphering_speed={vehicle.max_atmosphering_speed}
 							model={vehicle.model}
+							image={vehicle.image}
 						/>
 					</div>
 				))}

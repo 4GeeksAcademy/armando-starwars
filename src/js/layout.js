@@ -1,6 +1,9 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
+import DetallesPersonas from "./component/DetallesPersonas.jsx";
+import DetallesPlanetas from "./component/DetallesPlanetas.jsx";
+import DetallesVehiculos from "./component/DetallesVehiculos.jsx";
 
 import Home from "./views/home";
 import { Demo } from "./views/demo";
@@ -25,6 +28,9 @@ const Layout = () => {
 						<Route path="/" element={<Home />} />
 						<Route path="/demo" element={<Demo />} />
 						<Route path="/single/:theid" element={<Single />} />
+						<Route path="/character/:characterId" element={<DetallesPersonas />} />
+						<Route path="/planet/:planetId" element={<DetallesPlanetas />} />
+						<Route path="/planet/:planetId" element={<DetallesVehiculos />} />
 						<Route path="*" element={<h1>Not found!</h1>} />
 					</Routes>
 					<Footer />
