@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import vehicleData from "../../json/people.json";
 
 const DetallesVehiculos = () => {
-    const { vehicleId } = useParams(); 
+    const { vehicleId } = useParams();
     const [vehicle, setVehicle] = useState(null);
-    const image = `https://starwars-visualguide.com/assets/img/starships/${vehicleId}.jpg`;
+    const adjustedId = parseInt(vehicleId) - 1;
+
+    const vehicleImage = vehicleData.vehiculos.find(p => p.id === adjustedId)?.image || "https://via.placeholder.com/300";
 
     useEffect(() => {
         const fetchVehicle = async () => {
             try {
-                const response = await fetch(`https://swapi.tech/api/starships/${vehicleId}/`);
+                const response = await fetch(`https://swapi.tech/api/starships/${vehicleId}`);
                 const data = await response.json();
                 setVehicle(data.result.properties);
             } catch (error) {
@@ -34,9 +37,9 @@ const DetallesVehiculos = () => {
             <div className="card shadow-lg p-4 bg-dark text-light" style={{ maxWidth: "720px", width: "100%" }}>
                 <div className="row g-0">
                     <div className="col-md-4">
-                        <img 
-                            src={image}
-                            className="img-fluid rounded-start" 
+                        <img
+                            src={vehicleImage}
+                            className="img-fluid rounded-start"
                             alt={vehicle.name}
                             style={{ width: "100%", height: "100%", objectFit: "cover" }}
                         />

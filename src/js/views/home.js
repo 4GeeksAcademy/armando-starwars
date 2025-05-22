@@ -14,9 +14,9 @@ const Home = () => {
 	}, []);
 
 	return (
-		<div style={{ overflowX: "auto", whiteSpace: "nowrap" }}>
-			<h2>Personajes</h2>
-			<div className="my-5" style={{ display: "inline-block" }}>
+		<div>
+			<h2 className="section-title">Personajes</h2>
+			<div className="card-section">
 				{store.characters.map((character, index) => (
 					<div className="card mx-2" style={{ width: "18rem", display: "inline-block" }} key={index}>
 						<Personas
@@ -31,8 +31,8 @@ const Home = () => {
 				))}
 			</div>
 
-			<h2>Planets</h2>
-			<div className="my-5" style={{ display: "inline-block" }}>
+			<h2 className="section-title">Planetas</h2>
+			<div className="card-section">
 				{store.planets.map((planet, index) => (
 					<div className="card mx-2" style={{ width: "18rem", display: "inline-block" }} key={index}>
 						<Planetas
@@ -46,8 +46,8 @@ const Home = () => {
 				))}
 			</div>
 
-			<h2>Vehicles</h2>
-			<div className="my-5" style={{ display: "inline-block" }}>
+			<h2 className="section-title">Vehiculos</h2>
+			<div className="card-section">
 				{store.vehicles.map((vehicle, index) => (
 					<div className="card mx-2" style={{ width: "18rem", display: "inline-block" }} key={index}>
 						<Vehiculos

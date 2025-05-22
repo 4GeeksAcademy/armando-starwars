@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import planetData from "../../json/people.json";
 
 const DetallesPlanetas = () => {
     const { planetId } = useParams(); 
     const [planet, setPlanet] = useState(null);
-    const image = `https://starwars-visualguide.com/assets/img/planets/${planetId}.jpg`;
+    const adjustedId = parseInt(planetId) - 1;
+    
+    const planetImage = planetData.planets.find(p => p.id === adjustedId)?.image || "https://via.placeholder.com/300";
 
     useEffect(() => {
         const fetchPlanet = async () => {
             try {
-                const response = await fetch(`https://swapi.tech/api/planets/${planetId}/`);
+                const response = await fetch(`https://swapi.tech/api/planets/${planetId}`);
                 const data = await response.json();
-                setPlanet(data.result.properties); // accede solo a las propiedades
+                setPlanet(data.result.properties);
             } catch (error) {
                 console.error("Error fetching planet:", error);
             }
@@ -35,7 +38,7 @@ const DetallesPlanetas = () => {
                 <div className="row g-0">
                     <div className="col-md-4">
                         <img 
-                            src={image}
+                            src={planetImage}
                             className="img-fluid rounded-start" 
                             alt={planet.name}
                             style={{ width: "100%", height: "100%", objectFit: "cover" }}

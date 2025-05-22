@@ -12,23 +12,13 @@ const getState = ({ getStore, getActions, setStore }) => {
                     const response = await fetch("https://swapi.tech/api/people");
                     const data = await response.json();
 
-                    const detailedCharacters = await Promise.all(
-                        data.results.map(async (item) => {
-                            const res = await fetch(item.url);
-                            const details = await res.json();
+                    const charactersWithId = data.results.map(item => ({
+                        name: item.name,
+                        uid: item.uid,
+                        id: parseInt(item.uid)
+                    }));
 
-                            const id = item.uid;
-                            const image = `https://starwars-visualguide.com/assets/img/characters/${id}.jpg`;
-
-                            return {
-                                id: id,
-                                ...details.result.properties,
-                                image
-                            };
-                        })
-                    );
-
-                    setStore({ characters: detailedCharacters });
+                    setStore({ characters: charactersWithId });
                 } catch (error) {
                     console.log(error);
                 }
@@ -38,23 +28,13 @@ const getState = ({ getStore, getActions, setStore }) => {
                     const response = await fetch("https://swapi.tech/api/planets");
                     const data = await response.json();
 
-                    const detailedPlanets = await Promise.all(
-                        data.results.map(async (item) => {
-                            const res = await fetch(item.url);
-                            const details = await res.json();
+                    const planetsWithId = data.results.map(item => ({
+                        name: item.name,
+                        uid: item.uid,
+                        id: parseInt(item.uid)
+                    }));
 
-                            const id = item.uid;
-                            const image = `https://starwars-visualguide.com/assets/img/planets/${id}.jpg`;
-
-                            return {
-                                id,
-                                ...details.result.properties,
-                                image
-                            };
-                        })
-                    );
-
-                    setStore({ planets: detailedPlanets });
+                    setStore({ planets: planetsWithId });
                 } catch (error) {
                     console.log(error);
                 }
@@ -64,23 +44,13 @@ const getState = ({ getStore, getActions, setStore }) => {
                     const response = await fetch("https://swapi.tech/api/starships");
                     const data = await response.json();
 
-                    const detailedVehicles = await Promise.all(
-                        data.results.map(async (item) => {
-                            const res = await fetch(item.url);
-                            const details = await res.json();
+                    const vehiclesWithId = data.results.map(item => ({
+                        name: item.name,
+                        uid: item.uid,
+                        id: parseInt(item.uid)
+                    }));
 
-                            const id = item.uid;
-                            const image = `https://starwars-visualguide.com/assets/img/starships/${id}.jpg`;
-
-                            return {
-                                id,
-                                ...details.result.properties,
-                                image
-                            };
-                        })
-                    );
-
-                    setStore({ vehicles: detailedVehicles });
+                    setStore({ vehicles: vehiclesWithId });
                 } catch (error) {
                     console.log(error);
                 }
